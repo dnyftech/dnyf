@@ -1,0 +1,190 @@
+# 🚀 QUICK REFERENCE - SmolLM & Gemma3 Setup
+
+## ⚡ 3-Command Setup
+
+```bash
+# 1. Pull both models (first run only, takes time)
+ollama pull smollm:135m && ollama pull gemma3:270m
+
+# 2. Start Ollama (Terminal 1)
+ollama serve
+
+# 3. Start Backend (Terminal 2) - Choose ONE:
+export OLLAMA_MODEL=smollm:135m && python app_backend.py    # Fast ⚡
+# OR
+export OLLAMA_MODEL=gemma3:270m && python app_backend.py    # Quality ✨
+```
+
+**Then open: http://localhost:8000**
+
+---
+
+## 📊 Model Quick Facts
+
+| | SmolLM:135m | Gemma3:270m |
+|---|---|---|
+| **Size** | 135M | 270M |
+| **Speed** | ⚡⚡⚡ | ⚡⚡ |
+| **Quality** | Good | Better |
+| **RAM** | ~500MB | ~800MB |
+| **Use** | Termux default | Better responses |
+
+---
+
+## 🔄 Switch Models Anytime
+
+### Method 1: Web UI (Easiest)
+Just click the dropdown in the chat. Both are always loaded.
+
+### Method 2: Environment Variable
+```bash
+export OLLAMA_MODEL=smollm:135m  # or gemma3:270m
+python app_backend.py
+```
+
+### Method 3: Edit code
+In `app_backend.py` line ~20:
+```python
+DEFAULT_MODEL = "smollm:135m"  # Change this
+```
+
+---
+
+## ✅ Verify Installation
+
+```bash
+ollama list
+```
+
+Should show:
+```
+smollm:135m     8.2 GB
+gemma3:270m     12.5 GB
+```
+
+---
+
+## 🧪 Test Models Directly
+
+```bash
+ollama run smollm:135m "Hello, who are you?"
+ollama run gemma3:270m "Explain AI in one sentence"
+```
+
+---
+
+## 🆘 Common Issues
+
+| Problem | Fix |
+|---------|-----|
+| "No such model" | `ollama pull smollm:135m` |
+| Out of memory | Use `smollm:135m` (smaller) |
+| Can't connect | Make sure `ollama serve` is running |
+| Model not in dropdown | Restart backend after pulling model |
+
+---
+
+## 🎯 Best Practices
+
+✅ **SmolLM (135m):**
+- Default for Termux/mobile
+- Set `temperature: 0.5` for consistency
+- Great for quick questions
+- ~50-100ms per token
+
+✅ **Gemma3 (270m):**
+- Use for complex reasoning
+- Set `temperature: 0.7` for creativity
+- Better multi-step problems
+- ~100-150ms per token
+
+---
+
+## 📱 Termux Sessions Example
+
+**Session 1:**
+```bash
+ollama serve
+```
+
+**Session 2:**
+```bash
+export OLLAMA_MODEL=smollm:135m
+python ~/claude-ai/app_backend.py
+```
+
+**Browser:**
+```
+http://localhost:8000
+```
+
+Change model from dropdown ↔️
+
+---
+
+## 💾 One-Liner for Everything
+
+```bash
+bash ~/claude-ai/setup-models.sh && ollama serve
+```
+
+Then in another terminal:
+```bash
+OLLAMA_MODEL=smollm:135m python ~/claude-ai/app_backend.py
+```
+
+---
+
+## 📋 Environment Variables Cheat
+
+```bash
+# Model selection
+export OLLAMA_MODEL=smollm:135m
+
+# Ollama location (default is localhost)
+export OLLAMA_URL=http://localhost:11434
+
+# Backend port
+export PORT=8000
+
+# Run backend
+python app_backend.py
+```
+
+---
+
+## 🔥 Performance Tuning
+
+### For Maximum Speed (SmolLM)
+```python
+payload = {
+    "temperature": 0.3,
+    "num_predict": 128,
+    "top_k": 20,
+}
+```
+
+### For Best Quality (Gemma3)
+```python
+payload = {
+    "temperature": 0.7,
+    "num_predict": 512,
+    "top_k": 40,
+}
+```
+
+---
+
+## 📊 Monitor Performance
+
+```bash
+# Watch memory in real-time
+watch -n 1 'free -h'
+
+# Measure response time
+time ollama run smollm:135m "What is 2+2?"
+```
+
+---
+
+**Save this file. Reference it. You're done! 🎉**
